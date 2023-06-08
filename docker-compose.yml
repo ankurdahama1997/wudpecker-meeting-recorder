@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  recorder:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: wudpecker-recorder
+    env_file:
+      - .env
+    environment:
+      PYTHONUNBUFFERED: 1
+
+    privileged: true
+
+    volumes:
+      - /dev/shm:/dev/shm
+      - ./:/app
+    command: ["sh", "./docker-entrypoint-dev.sh"]
+
+volumes:
+  psql: null
