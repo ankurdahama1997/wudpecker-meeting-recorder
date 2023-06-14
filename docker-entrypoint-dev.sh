@@ -13,8 +13,8 @@ pactl set-default-source v1.monitor
 ./recorder.sh
 
 
-aws s3 cp out.mp3 $BUCKET_PRESET/$UUID.mp3
+aws s3 cp out.mp4 $BUCKET_PRESET/$UUID.mp4
 
-if [ -f start.txt ] && [ -f out.mp3 ]; then
+if [ -f start.txt ] && [ -f out.mp4 ]; then
     python3 done.py
 fi

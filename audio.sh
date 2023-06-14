@@ -35,4 +35,4 @@ done
 
 
 
-ffmpeg -loglevel error -f "pulse" -i default -y out.mp3
+ffmpeg -loglevel error -f "pulse" -i default -y out.mp4
