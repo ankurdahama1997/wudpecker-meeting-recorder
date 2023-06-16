@@ -1,4 +1,5 @@
 #!/bin/bash
+trap 'kill $(pgrep ffmpeg)' SIGTERM SIGINT
 
 echo "Checking for xvfb..."
 x=1
@@ -22,7 +23,7 @@ export XAUTHORITY=$(python3 xauthsplit.py "$out")
 
 
 # Wait for the start.txt file to be created
-echo "Waiting for start.txt to know that bot is accpeted..."
+echo "Waiting for start.txt to know that bot is accepted..."
 while :
 do
     if [ -f start.txt ]; then

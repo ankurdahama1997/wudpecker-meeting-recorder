@@ -33,7 +33,7 @@ params = {
 }
 
 print("Creating driver...")
-driver = uc.Chrome(options=options, use_subprocess=True, version_main=111)
+driver = uc.Chrome(options=options, use_subprocess=True, version_main=114)
 driver.execute_cdp_cmd("Page.setDownloadBehavior", params)
 
 
@@ -246,78 +246,85 @@ def watchMutation():
         }, 500)
 """, int(time.time()))
 
+def run_bot():
 
+    link = os.getenv("MEETING_LINK")
+    driver.get(link)
+    waitwithss(2)
+    action = EnhancedActionChains(driver)
 
-link = os.getenv("MEETING_LINK")
-driver.get(link)
-waitwithss(2)
-action = EnhancedActionChains(driver)
-
-bot_email = os.getenv("BOT_LOGIN_EMAIL")
-bot_password = os.getenv("BOT_LOGIN_PASSWORD")
-
-# Login process
-send_status("LOGGING_IN")
-check_if_detected(driver)
-driver.find_element(By.XPATH, "//*[contains(text(),'Sign in')]").click()
-waitwithss(5)
-action.send_keys_1by1(bot_email).perform()
-waitwithss(5)
-driver.find_element(By.XPATH, "//*[contains(text(),'Next')]").click()
-waitwithss(5)
-action.send_keys_1by1(bot_password).perform()
-driver.find_element(By.XPATH, "//*[contains(text(),'Next')]").click()
-waitwithss(2)
-
-# Back to join screen
-check_if_detected(driver)
-driver.get(link)
-waitwithss(2)
-
-# Try to join
-check_if_detected(driver)
-ask_to_join = driver.find_elements(By.XPATH, "//*[contains(text(),'Ask to join')]")
-if ask_to_join:
-  driver.find_element(By.XPATH, "//*[contains(text(),'Ask to join')]").click()
-else:
-  driver.find_element(By.XPATH, "//*[contains(text(),'Join now')]").click()
-waitwithss(1)
-
-# Waiting in Lobby
-send_status("IN_LOBBY")
-timer = time.time()
-inside = False
-
-while time.time() - timer < LOBBY_TIMEOUT:
+    bot_email = os.getenv("BOT_LOGIN_EMAIL")
+    bot_password = os.getenv("BOT_LOGIN_PASSWORD")
+    driver.find_element(By.XPATH, "//*[fsdhilfesiohys").click()
+    # Login process
+    send_status("LOGGING_IN")
     check_if_detected(driver)
-    if check_if_in_call(driver):
-        inside = True
-        break
-
-if not inside:
-    quit()
-
-# Meeting joined
-send_status("JOINED")
-start_time = time.time()
-watchMutation()
-with open('start.txt', 'w') as f:
-    f.write('Bot joined')
-while True:
-    if alone_in_room(driver, start_time):
-        send_status("EXIT_ALONE")
-        break
-    if is_kicked(driver):
-        send_status("EXIT_KICKED")
-        break
-    if timed_out(driver, start_time):
-        send_status("EXIT_TIMEOUT")
-        break
+    driver.find_element(By.XPATH, "//*[contains(text(),'Sign in')]").click()
     waitwithss(5)
+    action.send_keys_1by1(bot_email).perform()
+    waitwithss(5)
+    driver.find_element(By.XPATH, "//*[contains(text(),'Next')]").click()
+    waitwithss(5)
+    action.send_keys_1by1(bot_password).perform()
+    driver.find_element(By.XPATH, "//*[contains(text(),'Next')]").click()
+    waitwithss(2)
 
-# Call ended
-stopStream()
-print("Call ended successfully")
+    # Back to join screen
+    check_if_detected(driver)
+    driver.get(link)
+    waitwithss(2)
+
+    # Try to join
+    check_if_detected(driver)
+    ask_to_join = driver.find_elements(By.XPATH, "//*[contains(text(),'Ask to join')]")
+    if ask_to_join:
+        driver.find_element(By.XPATH, "//*[contains(text(),'Ask to join')]").click()
+    else:
+        driver.find_element(By.XPATH, "//*[contains(text(),'Join now')]").click()
+    waitwithss(1)
+
+    # Waiting in Lobby
+    send_status("IN_LOBBY")
+    timer = time.time()
+    inside = False
+
+    while time.time() - timer < LOBBY_TIMEOUT:
+        check_if_detected(driver)
+        if check_if_in_call(driver):
+            inside = True
+            break
+
+    if not inside:
+        quit()
+
+    # Meeting joined
+    send_status("JOINED")
+    start_time = time.time()
+    watchMutation()
+    with open('start.txt', 'w') as f:
+        f.write('Bot joined')
+    while True:
+        if alone_in_room(driver, start_time):
+            send_status("EXIT_ALONE")
+            break
+        if is_kicked(driver):
+            send_status("EXIT_KICKED")
+            break
+        if timed_out(driver, start_time):
+            send_status("EXIT_TIMEOUT")
+            break
+        waitwithss(5)
+
+    # Call ended
+    stopStream()
+    print("Call ended successfully")
 
 
-waitwithss(2)
+    waitwithss(2)
+
+try:
+    print('STARTING_BOT')
+    run_bot()
+except:
+    print('FAILED')
+    send_status("FAILED")
