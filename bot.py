@@ -48,7 +48,7 @@ uuid = os.getenv("UUID")
 def send_status(msg):
     try:
         if msg:
-            requests.post(status_url, data={"uuid": uuid, "status": msg})
+            requests.post(status_url+str(uuid)+"/", data={"uuid": uuid, "status": msg})
     except:
         pass
 
