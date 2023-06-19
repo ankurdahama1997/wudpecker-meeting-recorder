@@ -66,7 +66,7 @@ class EnhancedActionChains(ActionChains):
 def waitwithss(sec):
     for i in range(0, sec):
         time.sleep(1)
-        # driver.save_screenshot('live.png') # For debugging
+        driver.save_screenshot('live.png') # For debugging
 
 def stopStream():
     driver.execute_script("""
@@ -255,25 +255,22 @@ def run_bot():
 
     bot_email = os.getenv("BOT_LOGIN_EMAIL")
     bot_password = os.getenv("BOT_LOGIN_PASSWORD")
-    driver.find_element(By.XPATH, "//*[fsdhilfesiohys").click()
-    # Login process
+    # Start Login process otherwise cannot click continue :D
     send_status("LOGGING_IN")
     check_if_detected(driver)
     driver.find_element(By.XPATH, "//*[contains(text(),'Sign in')]").click()
     waitwithss(5)
-    action.send_keys_1by1(bot_email).perform()
-    waitwithss(5)
-    driver.find_element(By.XPATH, "//*[contains(text(),'Next')]").click()
-    waitwithss(5)
-    action.send_keys_1by1(bot_password).perform()
-    driver.find_element(By.XPATH, "//*[contains(text(),'Next')]").click()
-    waitwithss(2)
-
+    
     # Back to join screen
     check_if_detected(driver)
     driver.get(link)
     waitwithss(2)
-
+    try:
+        driver.find_element(By.XPATH, "//*[contains(text(),'Use without an account')]").click()
+        waitwithss(2)
+    except:
+        pass
+    action.send_keys_1by1("Joona's Wudpecker.io Notetaker").perform()
     # Try to join
     check_if_detected(driver)
     ask_to_join = driver.find_elements(By.XPATH, "//*[contains(text(),'Ask to join')]")
@@ -325,6 +322,7 @@ def run_bot():
 try:
     print('STARTING_BOT')
     run_bot()
-except:
+except Exception as e:
+    print(e)
     print('FAILED')
     send_status("FAILED")
