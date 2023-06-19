@@ -270,7 +270,7 @@ def run_bot():
         waitwithss(2)
     except:
         pass
-    action.send_keys_1by1("Joona's Wudpecker.io Notetaker").perform()
+    action.send_keys_1by1("Wudpecker.io Notetaker").perform()
     # Try to join
     check_if_detected(driver)
     ask_to_join = driver.find_elements(By.XPATH, "//*[contains(text(),'Ask to join')]")
