@@ -36,5 +36,5 @@ done
 
 
 
-ffmpeg -loglevel error -f "pulse" -i default -ac 1 -ar 16000 -c:a aac -b:a 128k -y out.mp4
+ffmpeg -loglevel error -f "pulse" -ar 16000 -i default -ac 1 -loop 1 -i black.png -c:v libx264 -c:a aac -b:a 192k -pix_fmt yuv420p -shortest out.mp4
 

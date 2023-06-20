@@ -314,15 +314,15 @@ def run_bot():
 
     # Call ended
     stopStream()
-    print("Call ended successfully")
+    print("Call ended successfully",flush=True)
 
 
     waitwithss(2)
 
 try:
-    print('STARTING_BOT')
+    print('STARTING_BOT',flush=True)
     run_bot()
 except Exception as e:
-    print(e)
-    print('FAILED')
+    print(e,flush=True)
+    print('FAILED',flush=True)
     send_status("FAILED")
