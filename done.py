@@ -44,4 +44,4 @@ except FileNotFoundError:
     print("The file 'speakers.txt' does not exist in the current directory.")
 
 
-requests.post(status_url, data={"uuid": uuid, "status": "DONE", "speakers": speakers})
+requests.post(status_url+str(uuid)+"/", data={"uuid": uuid, "status": "DONE", "speakers": speakers})
