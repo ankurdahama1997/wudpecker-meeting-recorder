@@ -36,5 +36,5 @@ done
 
 
 
-ffmpeg -loglevel error -f "pulse" -i default -ac 1 -ar 16000 -y out.mp4
+ffmpeg -loglevel error -f "pulse" -i default -ac 1 -ar 16000 -c:a aac -b:a 128k -y out.mp4
 
