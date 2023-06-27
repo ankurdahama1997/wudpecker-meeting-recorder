@@ -15,6 +15,7 @@ import glob
 import random
 import sys
 import json
+import datetime;
 from dotenv import load_dotenv
 
 options = uc.ChromeOptions()
@@ -222,31 +223,39 @@ def watchMutation():
         waitForElm('#stoprecord').then((elm) => {
             saveSpeakers()
         });
+        var currentStream = {
+            timestamp: '',
+            speakerName:''
+        }
         function switchStr(st, speaker_name) {
             var timestamp = (Math.ceil(Date.now()/1000)).toString()
             speaker_content +=  timestamp + "==>" + speaker_name + ";;;";
-            
+            currentStream.timestamp = timestamp
+            currentStream.speakerName = speaker_name
         }
 
         var current_video = null;
-
         setInterval(() => {
             var speaking = document.getElementsByClassName("lH9pqf atLQQ kssMZb")
             if(speaking.length > 0) {
-                var speaker_video = speaking[0].parentElement.parentElement.parentElement.getElementsByTagName('video')[0];
-                if(window.getComputedStyle(speaker_video).display == "none") {
-                    speaker_video = speaking[0].parentElement.parentElement.parentElement.getElementsByTagName('video')[1];
-                }
-                var speaker_name = speaking[0].parentElement.parentElement.parentElement.getElementsByClassName("XEazBc adnwBd")[0].innerText;
-                if (current_video != speaker_video) {
+                var speaker_video = 'mink'
+                var speaker_name = speaking[0].parentElement.getElementsByClassName("XEazBc adnwBd")[0].innerText;
+                if(speaker_name != currentStream.speakerName){
                     switchStr(speaker_video, speaker_name);
-                    current_video = speaker_video;
                 }
             } 
         }, 500)
+        
+        
 """, int(time.time()))
+  
 
 def run_bot():
+    name = os.getenv('NAME')
+    if name:
+        bot_name = f"{name}'s Wudpecker.io Notetaker"
+    else:
+        bot_name = "Wudpecker.io Notetaker"
 
     link = os.getenv("MEETING_LINK")
     driver.get(link)
@@ -270,7 +279,7 @@ def run_bot():
         waitwithss(2)
     except:
         pass
-    action.send_keys_1by1("Joona's Wudpecker.io Notetaker").perform()
+    action.send_keys_1by1(bot_name).perform()
     # Try to join
     check_if_detected(driver)
     ask_to_join = driver.find_elements(By.XPATH, "//*[contains(text(),'Ask to join')]")
@@ -298,6 +307,8 @@ def run_bot():
     send_status("JOINED")
     start_time = time.time()
     watchMutation()
+
+
     with open('start.txt', 'w') as f:
         f.write('Bot joined')
     while True:
