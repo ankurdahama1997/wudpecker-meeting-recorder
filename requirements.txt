@@ -1,7 +1,9 @@
 requests
 isodate
 selenium==4.9.1
-undetected_chromedriver==3.1.6
+undetected_chromedriver==3.5.3
 python-dotenv==0.19.2
 boto3
 awscli
+urllib3==1.26.9
+chardet==4.0.0

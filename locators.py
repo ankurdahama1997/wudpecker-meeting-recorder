@@ -10,6 +10,23 @@ class Locators:
                                         'and contains(@class, "zm-btn--primary") ' \
                                         'and contains(@class, "zm-btn__outline--blue")]'
     ZOOM_ERROR_MESSAGE_ON_WRONG_PASSCODE = 'error-for-pwd'
+    ZOOM_PARTICIPANTS_BUTTON = "//span[text()='Participants']"
+    ZOOM_MEETING_ENDED_BY_HOST = "//div[text()='This meeting has been ended by host']"
+    ZOOM_FREE_MEETING_ENDED = "//div[text()='This free Zoom meeting has ended']"
+    ZOOM_MEETING_UPGRADED_HOST = "//div[text()='This meeting has been upgraded by the host and now includes unlimited minutes.']"
+    ZOOM_UNDER_dIV_OKAY_BTN = "//button[text()='OK']"
+    ZOOM_IS_RECORDING_CHECK = "//div[text()='This meeting is being recorded']"
+    ZOOM_GOT_IT_BUTTON = "//button[text()='Got it']"
+    ZOOM_ASK_AUDIO_BUTTON = "//div[text()='The host would like you to speak']"
+    ZOOM_STAY_MUTED_BUTTON = "//button[text()='Stay Muted']"
+    ZOOM_ASK_FOR_VIDEO = "//div[text()='The host has asked you to start your video']"
+    ZOOM_LATER_BUTTON = "//button[text()='Later']"
+    ZOOM_PARTICIPANTS_BTN_CLASS = "participants-item__name-section"
+    # ZOOM_LOBBY_STATUS = "//span[text()='Host has joined. We've let them know you're here']"
+    ZOOM_LOBBY_STATUS = "//*[@id='root']/div/div[2]/div/div[1]/div[2]/div[1]/div[3]/span"
+    ZOOM_LOBBY_EXIT_BUTTON = "//*[@id='root']/div/div[2]/div/div[1]/div[2]/div[1]/div[4]/button"
+    ZOOM_LOBBY_CLASS_NAME = "meeting-on-hold"
+    ZOOM_MEETING_ROOM_LEAVE_BUTTON = "//*[@id='foot-bar']/div[3]/button"
 
     # meet
     MEET_NAME_INPUT_FIELD = 'input[placeholder="Your name"]'
